@@ -22,7 +22,56 @@ public class Addon extends MeteorAddon {
         LOG.info("Initializing Moon Addon");
 
         // Modules
-        Modules.get().add(new ModuleExample());
+        Modules.get().add(new AnchorAuraPlus());
+        Modules.get().add(new AntiAim());
+        Modules.get().add(new AutoGG());
+        Modules.get().add(new BedAura());
+        Modules.get().add(new BedAuraV2());
+        Modules.get().add(new BonemealAura());
+        Modules.get().add(new BowAimbot());
+        Modules.get().add(new BridgadierCrash());
+        Modules.get().add(new ClickAura());
+        Modules.get().add(new CompletionCrash());
+        Modules.get().add(new CrashChest());
+        Modules.get().add(new CreativeFlight());
+        Modules.get().add(new CrystalAura());
+        Modules.get().add(new CrystalAuraV2());
+        Modules.get().add(new FeedAura());
+        Modules.get().add(new FightBot());
+        Modules.get().add(new ForceOP());
+        Modules.get().add(new GrimNoSlow());
+        Modules.get().add(new GrimSpeedMine());
+        Modules.get().add(new GrimVelocity());
+        Modules.get().add(new HandNoClip());
+        Modules.get().add(new HeadRoll());
+        Modules.get().add(new HealthTags());
+        Modules.get().add(new InfiniteAura());
+        Modules.get().add(new InfiniteChat());
+        Modules.get().add(new InstantBunker());
+        Modules.get().add(new ItemExploits());
+        Modules.get().add(new Jetpack());
+        Modules.get().add(new Kaboom());
+        Modules.get().add(new KillauraPlus());
+        Modules.get().add(new KillauraLegit());
+        Modules.get().add(new Liquids());
+        Modules.get().add(new LSD());
+        Modules.get().add(new MountBypass());
+        Modules.get().add(new MultiAura());
+        Modules.get().add(new NocomCrash());
+        Modules.get().add(new OpenWaterESP());
+        Modules.get().add(new PortalGUI());
+        Modules.get().add(new ReachPlus());
+        Modules.get().add(new RemoteView());
+        Modules.get().add(new Restock());
+        Modules.get().add(new ShotbowCrash());
+        Modules.get().add(new SlotCrash());
+        Modules.get().add(new SnowShoe());
+        Modules.get().add(new TillAura());
+        Modules.get().add(new TargetStrafe());
+        Modules.get().add(new TreeBot());
+        Modules.get().add(new TriggerBot());
+        Modules.get().add(new UwU());
+        Modules.get().add(new VulcanGlide());
 
         // Commands
         Commands.add(new CommandExample());
