@@ -1,4 +1,4 @@
-package ccom.moon.addon.hud;
+package com.moon.addon.hud;
 
 import com.moon.addon.Addon;
 import meteordevelopment.meteorclient.systems.hud.HudElement;
