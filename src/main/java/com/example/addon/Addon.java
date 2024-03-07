@@ -1,8 +1,8 @@
 package com.moon.addon;
 
-import com.moon.addon.commands.CommandExample;
-import com.moon.addon.hud.HudExample;
-import com.moon.addon.modules.ModuleExample;
+import com.moon.addon.commands.*;
+import com.moon.addon.hud.*;
+import com.moon.addon.modules.*;
 import com.mojang.logging.LogUtils;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
 import meteordevelopment.meteorclient.commands.Commands;
