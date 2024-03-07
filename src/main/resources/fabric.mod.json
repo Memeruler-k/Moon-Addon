@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "id": "addon-template",
+  "id": "moon-addon",
   "version": "${version}",
-  "name": "Addon Template",
-  "description": "An addon template for the Meteor addons.",
+  "name": "Moon Addon",
+  "description": "Moon Addon on top!",
   "authors": [
-    "seasnail"
+    "StarlessMC"
   ],
   "contact": {
     "repo": "https://github.com/MeteorDevelopment/meteor-addon-template"
@@ -14,18 +14,18 @@
   "environment": "client",
   "entrypoints": {
     "meteor": [
-      "com.example.addon.Addon"
+      "com.moon.addon.Addon"
     ]
   },
   "mixins": [
-    "addon-template.mixins.json"
+    "moon-addon.mixins.json"
   ],
   "custom": {
-    "meteor-client:color": "225,25,25"
+    "meteor-client:color": "205,98,50"
   },
   "depends": {
-    "java": ">=17",
-    "minecraft": ">=${mc_version}",
+    "java": "17",
+    "minecraft": "1.20.2",
     "meteor-client": "*"
   }
 }
