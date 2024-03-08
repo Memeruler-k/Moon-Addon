@@ -223,6 +223,7 @@ public class FlyPlus {
         Polar,
         Custom,
         PAC,
+        Themis,
         PVPLand,
         PVPLegacy,
         DonutSMP,
