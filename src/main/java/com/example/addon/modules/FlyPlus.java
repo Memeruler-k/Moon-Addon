@@ -227,6 +227,6 @@ public class FlyPlus extends Module {
         PVPLegacy,
         DonutSMP,
         Negativity,
-        NegativityV2,
+        NegativityV2
     }
 }
