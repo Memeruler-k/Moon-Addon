@@ -28,7 +28,7 @@ import java.util.*;
 
 import static meteordevelopment.meteorclient.MeteorClient.mc;
 
-public class TargetHUD extends HudElement 
+public class TargetHUD extends HudElement {
 
    public class TargetHud extends HudElement {
 
@@ -382,5 +382,5 @@ public class TargetHUD extends HudElement
 
             PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(target.getUuid());
             renderPing = playerListEntry == null ? -1 : playerListEntry.getLatency();
-             }
+        }
     }
