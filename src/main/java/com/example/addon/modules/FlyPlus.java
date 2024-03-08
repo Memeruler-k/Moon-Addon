@@ -229,4 +229,3 @@ public class FlyPlus {
         DonutSMP,
         Negativity,
         NegativityV2
-}
