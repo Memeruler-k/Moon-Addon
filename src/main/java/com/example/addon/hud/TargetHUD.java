@@ -382,5 +382,4 @@ public class TargetHUD extends HudElement {
 
             PlayerListEntry playerListEntry = mc.getNetworkHandler().getPlayerListEntry(target.getUuid());
             renderPing = playerListEntry == null ? -1 : playerListEntry.getLatency();
-         }
-    }
+}
