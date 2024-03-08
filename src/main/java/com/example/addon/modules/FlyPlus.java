@@ -196,6 +196,7 @@ public class FlyPlus extends Module {
     );
   
 public class FlyPlus {
+    public FlyPlus() {
         super(Addon.CATEGORY, "Fly+", "Fly made to bypass certain anticheats or gamemodes.");
     }
 
@@ -228,5 +229,5 @@ public class FlyPlus {
         DonutSMP,
         Negativity,
         NegativityV2
-    }
+        }
 }
