@@ -195,15 +195,16 @@ public class FlyPlus extends Module {
         .build()
     );
   
+public class FlyPlus {
     public FlyPlus() {
         super(Addon.CATEGORY, "Fly+", "Fly made to bypass certain anticheats or gamemodes.");
+    }
 
-     public enum Mode {
+    public enum Mode {
         Grim,
         Cubecraft,
         Watchdog,
         Wraith,
-        Cubecraft,
         Mineplex,
         Taka,
         BlocksMC,
@@ -222,7 +223,6 @@ public class FlyPlus extends Module {
         Polar,
         Custom,
         PAC,
-        Themis,
         PVPLand,
         PVPLegacy,
         DonutSMP,
