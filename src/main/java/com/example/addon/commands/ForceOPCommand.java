@@ -6,8 +6,8 @@ import net.minecraft.command.CommandSource;
 
 import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
-public class CommandExample extends Command {
-    public CommandExample() {
+public class ForceOPCommand extends Command {
+    public ForceOPCommand() {
         super("ForceOP", "Gives you Operator. ONLY WORKS IN CRACKED SERVERS.");
     }
 
