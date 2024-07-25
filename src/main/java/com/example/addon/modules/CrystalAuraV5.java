@@ -23,71 +23,71 @@ public class CrystalAuraV5 extends Module {
     public enum PlacementMode {
 	    ClosestToEnemy,
         OptimalDamage,
-        SafeDistance
+        SafeDistance,
 
     public enum BreakMode {
 	    Priority,
         AllAround,
-        HealthBased
+        HealthBased,
 
     public enum AttackMode {
 	    SingleTarget,
         MultiTarget,
-        Focus
+        Focus,
 
     public enum TargetingMode {
 	    ClosestFirst,
         LowestHealth,
-        MostDangerous 
+        MostDangerous,
 
     public enum SafetyMode {
 	    Off,
         SelfDistanceCheck,
-        BlockUnder 
+        BlockUnder,
 
     public enum EfficiencyMode {
 	    Balanced,
         Performance,
-        Effectiveness 
+        Effectiveness,
 
     public enum CrystalPlacementMode {
 	    Linear,
         Cluster,
-        Randomized 
+        Randomized, 
 
     public enum CrystalBreakMode {
 	    Squential,
         Simultaneous,
-        Strategic
+        Strategic,
 
     public enum AutoSwitchMode {
 	    None,
         CrystalPriority,
-        ToolPriority
+        ToolPriority,
 
     public enum AnticheatMode {
 	    Bypass,
         Legit,
         Stealth,
-        Hybrid
+        Hybrid,
 
     public enum FailSafeMode {
 	    Shutdown,
         Pause,
         Slowdown,
-        Notification
+        Notification,
 
     public enum ActionLogLevelMode {
 	    Minimal,
         Normal,
         Verbose,
-        Debug
+        Debug,
 
     public enum FakelagMode {
 	    None,
         Mild,
         Moderate,
-        Severe
+        Severe,
 
 
 
