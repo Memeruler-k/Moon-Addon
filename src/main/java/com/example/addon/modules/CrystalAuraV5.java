@@ -15,6 +15,7 @@ public class CrystalAuraV5 extends Module {
     private final SettingGroup sgPerformance = settings.createGroup("Performance");
     private final SettingGroup sgPatterns = settings.createGroup("Patterns");
     private final SettingGroup sgAutomation = settings.createGroup("Automation");
+    private final SettingGroup sgAnticheat = settings.createGroup("Anticheat");
     private final SettingGroup sgBreak = settings.createGroup("Break");
     private final SettingGroup sgPause = settings.createGroup("Pause");
     private final SettingGroup sgRender = settings.createGroup("Render");
@@ -38,6 +39,57 @@ public class CrystalAuraV5 extends Module {
 	    ClosestFirst,
         LowestHealth,
         MostDangerous 
+
+    public enum SafetyMode {
+	    Off,
+        SelfDistanceCheck,
+        BlockUnder 
+
+    public enum EfficiencyMode {
+	    Balanced,
+        Performance,
+        Effectiveness 
+
+    public enum CrystalPlacementMode {
+	    Linear,
+        Cluster,
+        Randomized 
+
+    public enum CrystalBreakMode {
+	    Squential,
+        Simultaneous,
+        Strategic
+
+    public enum AutoSwitchMode {
+	    None,
+        CrystalPriority,
+        ToolPriority
+
+    public enum AnticheatMode {
+	    Bypass,
+        Legit,
+        Stealth,
+        Hybrid
+
+    public enum FailSafeMode {
+	    Shutdown,
+        Pause,
+        Slowdown,
+        Notification
+
+    public enum ActionLogLevelMode {
+	    Minimal,
+        Normal,
+        Verbose,
+        Debug
+
+    public enum FakelagMode {
+	    None,
+        Mild,
+        Moderate,
+        Severe
+
+
 
     // General
 
@@ -590,6 +642,308 @@ public class CrystalAuraV5 extends Module {
         .sliderMax(100)
         .build()
     );
+
+    // Safety
+
+    private final Setting<SafetyMode> safetyMode = sgSafety.add(new EnumSetting.Builder<SafetyMode>() 
+            .name("safety-mode")
+            .description("Safety modes.")
+            .defaultValue(SafetyMode.Off)
+            .build()
+    );
+
+    private final Setting<Double> minimumHealthToAct = sgSafety.add(new DoubleSetting.Builder()
+        .name("minimum-heath-to-act")
+        .description("Minimum health threshold to perform actions.")
+        .defaultValue(10)
+        .min(1)
+        .sliderMax(20)
+        .build()
+    );
+
+    public final Setting<Boolean> avoidSelfDamage = sgSafety.add(new BoolSetting.Builder()
+        .name("avoid-self-damage")
+        .description("Enable accitional checks to avoid self damage.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Performance
+
+    private final Setting<EfficiencyMode> efficiencyMode = sgPerformance.add(new EnumSetting.Builder<EfficiencyMode>() 
+            .name("efficiency-mode")
+            .description("How fast your performance is.")
+            .defaultValue(EfficiencyMode.Balanced)
+            .build()
+    );
+
+    private final Setting<Double> maxActionsPerTick = sgPerformance.add(new DoubleSetting.Builder()
+        .name("max-actions-per-tick")
+        .description("Limits the number of actions per tick to reduce load.")
+        .defaultValue(5)
+        .min(1)
+        .sliderMax(10)
+        .build()
+    );
+
+    public final Setting<Boolean> serverLoadAdaptation = sgPerformance.add(new BoolSetting.Builder()
+        .name("server-load-adaptation")
+        .description("Automatically adjust settings based on server load.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Patterns
+
+    private final Setting<CrystalPlacementMode> crystalPlacementMode = sgPatterns.add(new EnumSetting.Builder<CrystalPlacementMode>() 
+            .name("crystal-placement-mode")
+            .description("Placement modes for crystals.")
+            .defaultValue(CrystalPlacementMode.Linear)
+            .build()
+    );
+
+    private final Setting<CrystalBreakMode> crystalBreakMode = sgPatterns.add(new EnumSetting.Builder<CrystalBreakMode>() 
+            .name("crystal-break-mode")
+            .description("Break modes for crystals.")
+            .defaultValue(CrystalBreakMode.Squential)
+            .build()
+    );
+
+    private final Setting<Double> placementRadius = sgPatterns.add(new DoubleSetting.Builder()
+        .name("placement-radius")
+        .description("Defines the radius for placing crystals.")
+        .defaultValue(5)
+        .min(1)
+        .sliderMax(10)
+        .build()
+    );
+
+    private final Setting<Double> breakRadius = sgPatterns.add(new DoubleSetting.Builder()
+        .name("break-radius")
+        .description("Defines the radius for breaking crystals.")
+        .defaultValue(5)
+        .min(1)
+        .sliderMax(10)
+        .build()
+    );
+
+    // Automation
+
+    private final Setting<AutoSwitchMode> autoSwitchMode = sgAutomation.add(new EnumSetting.Builder<AutoSwitchMode>() 
+            .name("auto-switch-mode")
+            .description("Auto Switch Modes.")
+            .defaultValue(AutoSwitchMode.None)
+            .build()
+    );
+
+    public final Setting<Boolean> autoRetarget = sgAutomation.add(new BoolSetting.Builder()
+        .name("auto-retarget")
+        .description("Automatically retarget when current target is eliminated.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> inventoryManagementSpeed = sgAutomation.add(new DoubleSetting.Builder()
+        .name("inventory-management-speed")
+        .description("Speed of switching items in the inventory.")
+        .defaultValue(50)
+        .min(1)
+        .sliderMax(100)
+        .build()
+    );
+
+    // Anticheat
+
+   private final Setting<AnticheatMode> anticheatMode = sgAnticheat.add(new EnumSetting.Builder<AnticheatMode>() 
+            .name("anti-cheat-mode")
+            .description("Anticheat bypass modes.")
+            .defaultValue(AnticheatMode.Bypass)
+            .build()
+    );
+
+    private final Setting<Double> actionRandomization = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("action-randomization")
+        .description("Adds a random delay to actions to avoid patterns.")
+        .defaultValue(20)
+        .min(1)
+        .sliderMax(100)
+        .build()
+    );
+
+    private final Setting<Double> speedLimiter = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("speed-limiter")
+        .description("Limits the speed of actions to avoid suspicion.")
+        .defaultValue(75)
+        .min(50)
+        .sliderMax(100)
+        .build()
+    );
+
+    private final Setting<Double> packetThrottling = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("packet-throttling")
+        .description("Controls the rate of packet sending to the server.")
+        .defaultValue(50)
+        .min(1)
+        .sliderMax(100)
+        .build()
+    );
+
+    public final Setting<Boolean> humanLikeMovements = sgAnticheat.add(new BoolSetting.Builder()
+        .name("human-like-movements")
+        .description("Simulates human-like mouse movements.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> randomizedJitter = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("randomized-jitter")
+        .description("Adds small random movements to simulate jitter.")
+        .defaultValue(2)
+        .min(1)
+        .sliderMax(10)
+        .build()
+    );
+
+    public final Setting<Boolean> adaptiveBehavior = sgAnticheat.add(new BoolSetting.Builder()
+        .name("adaptive-behavior")
+        .description("Adjusts behavior based on server responses.")
+        .defaultValue(true)
+        .build()
+    );
+
+    
+    private final Setting<Double> actionCooldownVariation = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("action-cooldown-variation")
+        .description("Varies the cooldown between actions.")
+        .defaultValue(100)
+        .min(1)
+        .sliderMax(500)
+        .build()
+    );
+
+    private final Setting<Double> maxActionPerMinute = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("max-action-per-minute")
+        .description("Sets a cap on the number of actions per minute.")
+        .defaultValue(300)
+        .min(10)
+        .sliderMax(1000)
+        .build()
+    );
+
+    private final Setting<Double> detectionCooldown = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("detection-cooldown")
+        .description("Sets a cooldown after a suspected detection.")
+        .defaultValue(10000)
+        .min(0)
+        .sliderMax(60000)
+        .build()
+    );
+
+    private final Setting<FailSafeMode> failSafeMode = sgAnticheat.add(new EnumSetting.Builder<FailSafeMode>() 
+            .name("fail-safe-mode")
+            .description("Stops all actions if detection is suspected.")
+            .defaultValue(FailSafeMode.Shutdown)
+            .build()
+    );
+
+    public final Setting<Boolean> pingSpoofing = sgAnticheat.add(new BoolSetting.Builder()
+        .name("ping-spoofing")
+        .description("Simulates different ping levels to avoid detection.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Double> serverLagSimulation = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("server-lag-simulation")
+        .description("Adds artificial lag to simulate server delay.")
+        .defaultValue(100)
+        .min(0)
+        .sliderMax(500)
+        .build()
+    );
+
+    private final Setting<Double> packetDelay = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("packet-delay")
+        .description("Introduces a delay between sending packets.")
+        .defaultValue(50)
+        .min(0)
+        .sliderMax(200)
+        .build()
+    );
+
+    private final Setting<ActionLogLevelMode> actionLogLevelMode = sgAnticheat.add(new EnumSetting.Builder<ActionLogLevelMode>() 
+            .name("action-log-level-mode")
+            .description("Log everything to your console.")
+            .defaultValue(ActionLogLevelMode.Minimal)
+            .build()
+    );
+
+    private final Setting<Double> monitoringFrequency = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("monitoring-frequency")
+        .description("Frequency of checking for anticheat detection.")
+        .defaultValue(10)
+        .min(1)
+        .sliderMax(60)
+        .build()
+    );
+
+    private final Setting<Double> anomalyDetectionSensitivity = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("anomaly-detection-sensitivity")
+        .description("Sensitivity to detect unusual patterns.")
+        .defaultValue(70)
+        .min(1)
+        .sliderMax(100)
+        .build()
+    );
+
+    public final Setting<Boolean> anticheatCommunitcation = sgAnticheat.add(new BoolSetting.Builder()
+        .name("anticheat-communication")
+        .description("Communicates with anticheat systems to appear legitimate.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<FakelagMode> fakelagMode = sgAnticheat.add(new EnumSetting.Builder<FakelagMode>() 
+            .name("fakelag-mode")
+            .description("Cause lag to prevent anticheat detections.")
+            .defaultValue(FakelagMode.None)
+            .build()
+    );
+
+    private final Setting<Double> pingVariation = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("ping-variation")
+        .description("Adds random variation to the ping.")
+        .defaultValue(50)
+        .min(0)
+        .sliderMax(200)
+        .build()
+    );
+
+    public final Setting<Boolean> autoAdjustBasedOnDetection = sgAnticheat.add(new BoolSetting.Builder()
+        .name("auto-adjust-based-on-detection")
+        .description("Automatically adjusts settings if detection is suspected")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Double> dynamicRandomization = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("dynamic-randomization")
+        .description("Changes the level of randomization dynamically.")
+        .defaultValue(50)
+        .min(0)
+        .sliderMax(100)
+        .build()
+    );
+
+    private final Setting<Double> detectionResponceDelay = sgAnticheat.add(new DoubleSetting.Builder()
+        .name("detection-response-delay")
+        .description("Delay before responding to a suspected detection.")
+        .defaultValue(1000)
+        .min(0)
+        .sliderMax(5000)
+        .build()
+    );
+
     public CrystalAuraV5() {
         super(Addon.CATEGORY, "Crystal Aura V5", "An improved version of Crystal Aura.");
     }
