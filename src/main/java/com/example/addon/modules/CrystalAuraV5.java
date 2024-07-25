@@ -9,9 +9,35 @@ public class CrystalAuraV5 extends Module {
     private final SettingGroup sgPlace = settings.createGroup("Place");
     private final SettingGroup sgFacePlace = settings.createGroup("Face Place");
     private final SettingGroup sgTiming = settings.createGroup("Timing");
+    private final SettingGroup sgStrategy = settings.createGroup("Strategy");
+    private final SettingGroup sgCombat = settings.createGroup("Combat");
+    private final SettingGroup sgSafety = settings.createGroup("Safety");
+    private final SettingGroup sgPerformance = settings.createGroup("Performance");
+    private final SettingGroup sgPatterns = settings.createGroup("Patterns");
+    private final SettingGroup sgAutomation = settings.createGroup("Automation");
     private final SettingGroup sgBreak = settings.createGroup("Break");
     private final SettingGroup sgPause = settings.createGroup("Pause");
     private final SettingGroup sgRender = settings.createGroup("Render");
+
+    public enum PlacementMode {
+	    ClosestToEnemy,
+        OptimalDamage,
+        SafeDistance
+
+    public enum BreakMode {
+	    Priority,
+        AllAround,
+        HealthBased
+
+    public enum AttackMode {
+	    SingleTarget,
+        MultiTarget,
+        Focus
+
+    public enum TargetingMode {
+	    ClosestFirst,
+        LowestHealth,
+        MostDangerous 
 
     // General
 
@@ -454,6 +480,116 @@ public class CrystalAuraV5 extends Module {
         .build()
     );
 
+    private final Setting<Double> actionTimeout = sgTiming.add(new DoubleSetting.Builder()
+        .name("action-timeout")
+        .description("Maximum time to wait for an action to complete before moving to the next one")
+        .defaultValue(1000)
+        .min(1)
+        .sliderMax(5000)
+        .build()
+    );
+
+    private final Setting<Double> failRetryDelay = sgTiming.add(new DoubleSetting.Builder()
+        .name("fail-retry-delay")
+        .description("Delay before retrying a failed action.")
+        .defaultValue(500)
+        .min(1)
+        .sliderMax(5000)
+        .build()
+    );
+
+    private final Setting<Double> placeFocusDelay = sgTiming.add(new DoubleSetting.Builder()
+        .name("place-focus-delay")
+        .description("Delay specifically when placing crystals while focusing on a target.")
+        .defaultValue(200)
+        .min(1)
+        .sliderMax(1000)
+        .build()
+    );
+
+    private final Setting<Double> breakFocusDelay = sgTiming.add(new DoubleSetting.Builder()
+        .name("break-focus-delay")
+        .description("Delay specifically when breaking crystals while focusing on a target.")
+        .defaultValue(200)
+        .min(1)
+        .sliderMax(1000)
+        .build()
+    );
+
+    private final Setting<Double> adaptiveDelay = sgTiming.add(new DoubleSetting.Builder()
+        .name("adaptive-delay")
+        .description("Adjust delays dynamically based on the current combat situation.")
+        .defaultValue(100)
+        .min(1)
+        .sliderMax(500)
+        .build()
+    );
+
+    private final Setting<Double> delayMultiplier = sgTiming.add(new DoubleSetting.Builder()
+        .name("delay-multiplier")
+        .description("Multiplier to apply to all delay settings, useful for quick adjustments.")
+        .defaultValue(1)
+        .min(0.1)
+        .sliderMax(2)
+        .build()
+    );
+
+    // Strategy
+
+    private final Setting<PlacementMode> PlacementMode = sgStrategy.add(new EnumSetting.Builder<PlacementMode>() 
+            .name("Placement")
+            .description("Placement Strategy Modes.")
+            .defaultValue(PlacementMode.ClosestToEnemy)
+            .build()
+    );
+
+    private final Setting<BreakMode> BreakMode = sgStrategy.add(new EnumSetting.Builder<BreakMode>() 
+            .name("Break")
+            .description("Break Strategy Modes.")
+            .defaultValue(Break.Priority)
+            .build()
+    );
+
+    public final Setting<Boolean> dynamicAdjustment = sgStrategy.add(new BoolSetting.Builder()
+        .name("dynamic-adjustment")
+        .description("Automatically adjust strategies based on combat situation.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Combat
+
+    private final Setting<AttackMode> attackMode = sgCombat.add(new EnumSetting.Builder<AttackMode>() 
+            .name("attack-mode")
+            .description("Attack Combat Modes.")
+            .defaultValue(AttackMode.SingleTarget)
+            .build()
+    );
+
+    private final Setting<TargetingMode> targetingMode = sgCombat.add(new EnumSetting.Builder<TargetingMode>() 
+            .name("targeting-mode")
+            .description("How crystal aura targets.")
+            .defaultValue(TargetingMode.ClosestFirst)
+            .build()
+    );
+
+    private final Setting<Double> maxTargets = sgCombat.add(new DoubleSetting.Builder()
+        .name("max-targets")
+        .description("Maximum number of targets to attack.")
+        .defaultValue(3)
+        .min(1)
+        .sliderMax(10)
+        .build()
+    );
+
+    private final Setting<Double> criticalHitChance = sgCombat.add(new DoubleSetting.Builder()
+        .name("critical-hit-chance")
+        .description("Adjust the probability of landing critical hits.")
+        .defaultValue(50)
+        .min(1)
+        .sliderMax(100)
+        .build()
+    );
     public CrystalAuraV5() {
         super(Addon.CATEGORY, "Crystal Aura V5", "An improved version of Crystal Aura.");
     }
