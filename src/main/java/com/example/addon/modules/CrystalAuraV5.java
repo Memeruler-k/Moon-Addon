@@ -310,7 +310,7 @@ public class CrystalAuraV5 extends Module {
         .build()
     );
 
-    private final Setting<Boolean> 18hitdelay = sgFacePlace.add(new BoolSetting.Builder()
+    private final Setting<Boolean> hitDelay18 = sgFacePlace.add(new BoolSetting.Builder()
         .name("Use 1.8 hit delay")
         .description("Allows you to combo someone like in 1.8.")
         .defaultValue(false)
@@ -924,6 +924,258 @@ public class CrystalAuraV5 extends Module {
         .defaultValue(1000)
         .min(0)
         .sliderMax(5000)
+        .build()
+    );
+
+    private final Setting<Boolean> doBreak = sgBreak.add(new BoolSetting.Builder()
+        .name("break")
+        .description("If the CA should break crystals.")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Integer> breakDelay = sgBreak.add(new IntSetting.Builder()
+        .name("break-delay")
+        .description("The delay in ticks to wait to break a crystal after it's placed.")
+        .defaultValue(0)
+        .min(0)
+        .sliderMax(20)
+        .build()
+    );
+
+    private final Setting<Boolean> smartDelay = sgBreak.add(new BoolSetting.Builder()
+        .name("smart-delay")
+        .description("Only breaks crystals when the target can receive damage.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Double> breakRange = sgBreak.add(new DoubleSetting.Builder()
+        .name("break-range")
+        .description("Range in which to break crystals.")
+        .defaultValue(4.5)
+        .min(0)
+        .sliderMax(6)
+        .build()
+    );
+
+    private final Setting<Double> breakWallsRange = sgBreak.add(new DoubleSetting.Builder()
+        .name("walls-range")
+        .description("Range in which to break crystals when behind blocks.")
+        .defaultValue(4.5)
+        .min(0)
+        .sliderMax(6)
+        .build()
+    );
+
+    private final Setting<Boolean> onlyBreakOwn = sgBreak.add(new BoolSetting.Builder()
+        .name("only-own")
+        .description("Only breaks own crystals.")
+        .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Integer> breakAttempts = sgBreak.add(new IntSetting.Builder()
+        .name("break-attempts")
+        .description("How many times to hit a crystal before stopping to target it.")
+        .defaultValue(2)
+        .sliderMin(1)
+        .sliderMax(5)
+        .build()
+    );
+
+    private final Setting<Integer> ticksExisted = sgBreak.add(new IntSetting.Builder()
+        .name("ticks-existed")
+        .description("Amount of ticks a crystal needs to have lived for it to be attacked by CrystalAura.")
+        .defaultValue(0)
+        .min(0)
+        .build()
+    );
+
+    private final Setting<Integer> attackFrequency = sgBreak.add(new IntSetting.Builder()
+        .name("attack-frequency")
+        .description("Maximum hits to do per second.")
+        .defaultValue(25)
+        .min(1)
+        .sliderRange(1, 30)
+        .build()
+    );
+
+    private final Setting<Boolean> fastBreak = sgBreak.add(new BoolSetting.Builder()
+        .name("fast-break")
+        .description("Ignores break delay and tries to break the crystal as soon as it's spawned in the world.")
+        .defaultValue(true)
+        .build()
+    );
+
+    // Pause
+
+    public final Setting<PauseMode> pauseOnUse = sgPause.add(new EnumSetting.Builder<PauseMode>()
+        .name("pause-on-use")
+        .description("Which processes should be paused while using an item.")
+        .defaultValue(PauseMode.Place)
+        .build()
+    );
+
+    public final Setting<PauseMode> pauseOnMine = sgPause.add(new EnumSetting.Builder<PauseMode>()
+        .name("pause-on-mine")
+        .description("Which processes should be paused while mining a block.")
+        .defaultValue(PauseMode.None)
+        .build()
+    );
+
+    private final Setting<Boolean> pauseOnLag = sgPause.add(new BoolSetting.Builder()
+        .name("pause-on-lag")
+        .description("Whether to pause if the server is not responding.")
+        .defaultValue(true)
+        .build()
+    );
+
+    public final Setting<List<Module>> pauseModules = sgPause.add(new ModuleListSetting.Builder()
+        .name("pause-modules")
+        .description("Pauses while any of the selected modules are active.")
+        .defaultValue(BedAura.class)
+        .build()
+    );
+
+    public final Setting<Double> pauseHealth = sgPause.add(new DoubleSetting.Builder()
+        .name("pause-health")
+        .description("Pauses when you go below a certain health.")
+        .defaultValue(5)
+        .range(0,36)
+        .sliderRange(0,36)
+        .build()
+    );
+
+    // Render
+
+    public final Setting<SwingMode> swingMode = sgRender.add(new EnumSetting.Builder<SwingMode>()
+        .name("swing-mode")
+        .description("How to swing when placing.")
+        .defaultValue(SwingMode.Both)
+        .build()
+    );
+
+    private final Setting<RenderMode> renderMode = sgRender.add(new EnumSetting.Builder<RenderMode>()
+        .name("render-mode")
+        .description("The mode to render in.")
+        .defaultValue(RenderMode.Normal)
+        .build()
+    );
+
+    private final Setting<Boolean> renderPlace = sgRender.add(new BoolSetting.Builder()
+        .name("render-place")
+        .description("Renders a block overlay over the block the crystals are being placed on.")
+        .defaultValue(true)
+        .visible(() -> renderMode.get() == RenderMode.Normal)
+        .build()
+    );
+
+    private final Setting<Integer> placeRenderTime = sgRender.add(new IntSetting.Builder()
+        .name("place-time")
+        .description("How long to render placements.")
+        .defaultValue(10)
+        .min(0)
+        .sliderMax(20)
+        .visible(() -> renderMode.get() == RenderMode.Normal && renderPlace.get())
+        .build()
+    );
+
+    private final Setting<Boolean> renderBreak = sgRender.add(new BoolSetting.Builder()
+        .name("render-break")
+        .description("Renders a block overlay over the block the crystals are broken on.")
+        .defaultValue(false)
+        .visible(() -> renderMode.get() == RenderMode.Normal)
+        .build()
+    );
+
+    private final Setting<Integer> breakRenderTime = sgRender.add(new IntSetting.Builder()
+        .name("break-time")
+        .description("How long to render breaking for.")
+        .defaultValue(13)
+        .min(0)
+        .sliderMax(20)
+        .visible(() -> renderMode.get() == RenderMode.Normal && renderBreak.get())
+        .build()
+    );
+
+    private final Setting<Integer> smoothness = sgRender.add(new IntSetting.Builder()
+        .name("smoothness")
+        .description("How smoothly the render should move around.")
+        .defaultValue(10)
+        .min(0)
+        .sliderMax(20)
+        .visible(() -> renderMode.get() == RenderMode.Smooth)
+        .build()
+    );
+
+    private final Setting<Double> height = sgRender.add(new DoubleSetting.Builder()
+        .name("height")
+        .description("How tall the gradient should be.")
+        .defaultValue(0.7)
+        .min(0)
+        .sliderMax(1)
+        .visible(() -> renderMode.get() == RenderMode.Gradient)
+        .build()
+    );
+
+    private final Setting<Integer> renderTime = sgRender.add(new IntSetting.Builder()
+        .name("render-time")
+        .description("How long to render placements.")
+        .defaultValue(10)
+        .min(0)
+        .sliderMax(20)
+        .visible(() -> renderMode.get() == RenderMode.Smooth || renderMode.get() == RenderMode.Fading)
+        .build()
+    );
+
+    private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
+        .name("shape-mode")
+        .description("How the shapes are rendered.")
+        .defaultValue(ShapeMode.Both)
+        .visible(() -> renderMode.get() != RenderMode.None)
+        .build()
+    );
+
+    private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
+        .name("side-color")
+        .description("The side color of the block overlay.")
+        .defaultValue(new SettingColor(255, 255, 255, 45))
+        .visible(() -> shapeMode.get().sides() && renderMode.get() != RenderMode.None)
+        .build()
+    );
+
+    private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
+        .name("line-color")
+        .description("The line color of the block overlay.")
+        .defaultValue(new SettingColor(255, 255, 255))
+        .visible(() -> shapeMode.get().lines() && renderMode.get() != RenderMode.None)
+        .build()
+    );
+
+    private final Setting<Boolean> renderDamageText = sgRender.add(new BoolSetting.Builder()
+        .name("damage")
+        .description("Renders crystal damage text in the block overlay.")
+        .defaultValue(true)
+        .visible(() -> renderMode.get() != RenderMode.None)
+        .build()
+    );
+
+    private final Setting<SettingColor> damageColor = sgRender.add(new ColorSetting.Builder()
+        .name("damage-color")
+        .description("The color of the damage text.")
+        .defaultValue(new SettingColor(255, 255, 255))
+        .visible(() -> renderMode.get() != RenderMode.None && renderDamageText.get())
+        .build()
+    );
+
+    private final Setting<Double> damageTextScale = sgRender.add(new DoubleSetting.Builder()
+        .name("damage-scale")
+        .description("How big the damage text should be.")
+        .defaultValue(1.25)
+        .min(1)
+        .sliderMax(4)
+        .visible(() -> renderMode.get() != RenderMode.None && renderDamageText.get())
         .build()
     );
 
