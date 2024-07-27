@@ -21,73 +21,56 @@ public class CrystalAuraV5 extends Module {
     private final SettingGroup sgRender = settings.createGroup("Render");
 
     public enum PlacementMode {
-	    ClosestToEnemy,
-        OptimalDamage,
-        SafeDistance,
+        Closest_To_Enemy, Optimal_Damange, Safe_Distance;
+    }
 
     public enum BreakMode {
-	    Priority,
-        AllAround,
-        HealthBased,
+        Priority, All_Around, Health_Based;
+    }
 
     public enum AttackMode {
-	    SingleTarget,
-        MultiTarget,
-        Focus,
+        Single_Target, Multi_Target, Focus;
+    }
 
     public enum TargetingMode {
-	    ClosestFirst,
-        LowestHealth,
-        MostDangerous,
+        Closest_First, Lowest_Health, Most_Dangerous;
+    }
 
     public enum SafetyMode {
-	    Off,
-        SelfDistanceCheck,
-        BlockUnder,
+        Off, Self_Distance_Check, Block_Under;
+    }
 
     public enum EfficiencyMode {
-	    Balanced,
-        Performance,
-        Effectiveness,
+        Balanced, Performance, Effectiveness;
+    }
 
     public enum CrystalPlacementMode {
-	    Linear,
-        Cluster,
-        Randomized, 
+        Linear, Cluster, Randomized;
+    }
 
     public enum CrystalBreakMode {
-	    Squential,
-        Simultaneous,
-        Strategic,
+        Sequential, Simultaneous, Strategic;
+    }
 
     public enum AutoSwitchMode {
-	    None,
-        CrystalPriority,
-        ToolPriority,
+        None, Crystal_Priority, Tool_Priority;
+    }
 
     public enum AnticheatMode {
-	    Bypass,
-        Legit,
-        Stealth,
-        Hybrid,
+        Bypass, Legit, Stealth, Hybrid;
+    }
 
     public enum FailSafeMode {
-	    Shutdown,
-        Pause,
-        Slowdown,
-        Notification,
+        Shutdown, Pause, Slowdown, Notification;
+    }
 
     public enum ActionLogLevelMode {
-	    Minimal,
-        Normal,
-        Verbose,
-        Debug,
+        Minimal, Normal, Verbose, Debug;
+    }
 
     public enum FakelagMode {
-	    None,
-        Mild,
-        Moderate,
-        Severe,
+        None, Mild, Moderate, Severe;
+    }
 
 
 
