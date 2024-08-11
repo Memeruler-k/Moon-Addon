@@ -2,6 +2,9 @@ package com.moon.addon.modules;
 
 import com.moon.addon.Addon;
 import meteordevelopment.meteorclient.systems.modules.Module;
+import meteordevelopment.meteorclient.settings.BoolSetting;
+import meteordevelopment.meteorclient.settings.Setting;
+import meteordevelopment.meteorclient.settings.SettingGroup;
 
 public class CrystalAuraV5 extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
