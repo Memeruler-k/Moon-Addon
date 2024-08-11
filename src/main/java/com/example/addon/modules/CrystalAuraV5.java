@@ -5,6 +5,9 @@ import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.settings.BoolSetting;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
+import meteordevelopment.meteorclient.setting.EnumSetting;
+import meteordevelopment.meteorclient.setting.IntSetting;
+import meteordevelopment.meteorclient.setting.DoubleSetting;
 
 public class CrystalAuraV5 extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
