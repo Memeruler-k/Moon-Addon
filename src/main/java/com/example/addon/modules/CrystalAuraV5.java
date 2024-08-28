@@ -1,10 +1,10 @@
 package com.moon.addon.modules;
-package meteordevelopment.meteorclient.settings.BoolSetting;
-package meteordevelopment.meteorclient.settings.Setting;
-package meteordevelopment.meteorclient.settings.SettingGroup;
-package meteordevelopment.meteorclient.setting.EnumSetting;
-package meteordevelopment.meteorclient.setting.IntSetting;
-package meteordevelopment.meteorclient.setting.DoubleSetting;
+import meteordevelopment.meteorclient.settings.BoolSetting;
+import meteordevelopment.meteorclient.settings.Setting;
+import meteordevelopment.meteorclient.settings.SettingGroup;
+import meteordevelopment.meteorclient.setting.EnumSetting;
+import meteordevelopment.meteorclient.setting.IntSetting;
+import meteordevelopment.meteorclient.setting.DoubleSetting;
 
 import com.moon.addon.Addon;
 import meteordevelopment.meteorclient.systems.modules.Module;
