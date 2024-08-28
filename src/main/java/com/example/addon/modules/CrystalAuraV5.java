@@ -6,10 +6,6 @@ import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.settings.EnumSetting;
 import meteordevelopment.meteorclient.settings.IntSetting;
 import meteordevelopment.meteorclient.settings.DoubleSetting;
-import meteordevelopment.meteorclient.settings.YawStepMode;
-import meteordevelopment.meteorclient.settings.EntityType;
-import meteordevelopment.meteorclient.settings.SupportMode;
-import meteordevelopment.meteorclient.settings.Keybind;
 
 import com.moon.addon.Addon;
 import meteordevelopment.meteorclient.settings.BoolSetting;
@@ -150,7 +146,6 @@ public class CrystalAuraV5 extends Module {
         .name("yaw-steps-mode")
         .description("When to run the yaw steps check.")
         .defaultValue(YawStepMode.Break)
-        .visible(rotate::get)
         .build()
     );
 
@@ -159,15 +154,6 @@ public class CrystalAuraV5 extends Module {
         .description("Maximum number of degrees its allowed to rotate in one tick.")
         .defaultValue(180)
         .range(1, 180)
-        .visible(rotate::get)
-        .build()
-    );
-
-    private final Setting<Set<EntityType<?>>> entities = sgGeneral.add(new EntityTypeListSetting.Builder()
-        .name("entities")
-        .description("Entities to attack.")
-        .onlyAttackable()
-        .defaultValue(EntityType.PLAYER, EntityType.WARDEN, EntityType.WITHER)
         .build()
     );
 
@@ -265,7 +251,6 @@ public class CrystalAuraV5 extends Module {
         .description("Delay in ticks after placing support block.")
         .defaultValue(1)
         .min(0)
-        .visible(() -> support.get() != SupportMode.Disabled)
         .build()
     );
 
@@ -308,7 +293,7 @@ public class CrystalAuraV5 extends Module {
         .build()
     );
 
-    private final Setting<Keybind> forceFacePlace = sgFacePlace.add(new KeybindSetting.Builder()
+    private final Setting<Boolean> forceFacePlace = sgFacePlace.add(new BoolSetting.Builder()
         .name("force-face-place")
         .description("Starts face place when this button is pressed.")
         .defaultValue(Keybind.none())
@@ -322,7 +307,7 @@ public class CrystalAuraV5 extends Module {
         .description("Target hit timing.")
         .defaultValue(10)
         .min(0.01)
-        .sliderMax(1000.0)
+        .sliderMax(100.0)
         .build()
     );
 
