@@ -6,6 +6,10 @@ import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.settings.EnumSetting;
 import meteordevelopment.meteorclient.settings.IntSetting;
 import meteordevelopment.meteorclient.settings.DoubleSetting;
+import meteordevelopment.meteorclient.settings.YawStepMode;
+import meteordevelopment.meteorclient.settings.EntityType;
+import meteordevelopment.meteorclient.settings.SupportMode;
+import meteordevelopment.meteorclient.settings.Keybind;
 
 import com.moon.addon.Addon;
 import meteordevelopment.meteorclient.settings.BoolSetting;
